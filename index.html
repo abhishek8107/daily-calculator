@@ -75,14 +75,26 @@
             font-size: 14px;
         }
     </style>
+    <link rel="stylesheet" href="style.css">
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 
 <body>
-
+    
+<header class="site-header">
+<h1>Daily Calculator</h1>
+<nav>
+    <a href="#home">Home</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#about">About</a>
+</nav></header>
+<section id="home">
+    <h2>welcome to our page</h2>
+</section>
 <div class="box">
-  <pre><h1 style="color:red; width:10%">abhishek Sharma's site</h1> </pre>
-    <h2>Daily Calculator</h2>
+  <pre><h1 style="color:red; width:10%"> abhishek Sharma's site</h1> </pre>
+   <section id="calculator"> <h2>Daily Calculator</h2>
 
     <input type="date" id="date">
 
@@ -194,6 +206,12 @@ function savePDF() {
 
 loadHistory();
 </script>
-
+</section>
+<section id="about"><h2>about</h2>
+<p>this is daily calculator app made for multiply and save your data</p></section>
+<footer class="site-footer">
+  <p>© 2025 Daily Calculator | Made by Abhishek</p>
+</footer>
+<script src="script.js"></script>
 </body>
 </html>
