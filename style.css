@@ -51,3 +51,60 @@ body {
 html {
     scroll-behavior: smooth;
 }
+/* Toggle container */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  z-index: 1000;
+}
+
+/* Hide checkbox */
+.theme-toggle input {
+  display: none;
+}
+
+/* Switch body */
+.theme-toggle label {
+  width: 46px;
+  height: 24px;
+  background: #ccc;
+  display: block;
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+/* Slider knob */
+.theme-toggle label::after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background: #fff;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* ON state */
+.theme-toggle input:checked + label {
+  background: #4caf50;
+}
+
+.theme-toggle input:checked + label::after {
+  transform: translateX(22px);
+}
+
+/* THEMES */
+body.light {
+  background: #ffffff;
+  color: #000;
+}
+
+body.dark {
+  background: #111;
+  color: #fff;
+}
