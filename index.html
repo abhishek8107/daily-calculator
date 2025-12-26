@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Entry App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .box {
+            width: 380px;
+            background: #020617;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 6px 0;
+            border-radius: 6px;
+            border: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save {
+            background: #38bdf8;
+        }
+
+        /* 🔥 SMALL DELETE ICON STYLE */
+        .delete-icon {
+            background: #ef4444;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            line-height: 12px;
+            text-align: center;
+        }
+
+        .delete-icon:hover {
+            background: #dc2626;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding: 6px 0;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<div class="box">
+  <pre><h1 style="color:red; width:10%">BuddhiPrakash Sharma</h1> </pre>
+    <h2>Daily Calculator</h2>
+
+    <input type="date" id="date">
+
+    <input type="text" id="b1" placeholder="Box 1 × 5">
+    <input type="text" id="b2" placeholder="Box 2 × 10">
+    <input type="text" id="b3" placeholder="Box 3 × 15">
+    <input type="text" id="b4" placeholder="Box 4 × 20">
+    <input type="text" id="b5" placeholder="Box 5 × 30">
+    <input type="text" id="b6" placeholder="Box 6 × 40">
+    <input type="text" id="b7" placeholder="Box 7 × 50">
+
+    <button class="save" onclick="saveData()">Calculate & Save</button>
+    <button class="save" onclick="savePDF()">Save as PDF</button>
+
+    <div id="result" style="text-align:center;margin-top:8px;"></div>
+
+    <h3 style="text-align:center;color:#facc15;">History</h3>
+    <div id="history"></div>
+</div>
+
+<script>
+const weights = [5,10,15,20,30,40,50];
+
+function calculateExpression(expr) {
+    if (!expr) return 0;
+
+    // allow only numbers and +
+    if (!/^[0-9+ ]+$/.test(expr)) {
+        alert("Sirf number aur + allowed hai");
+        throw "Invalid Expression";
+    }
+
+    return expr.split("+").reduce((sum, n) => sum + Number(n.trim()), 0);
+}
+
+function saveData() {
+    const date = document.getElementById("date").value;
+    if (!date) {
+        alert("Date select karo");
+        return;
+    }
+
+    let total = 0;
+
+    for (let i = 1; i <= 7; i++) {
+        let expr = document.getElementById("b"+i).value;
+        let value = calculateExpression(expr);
+        total += value * weights[i-1];
+    }
+
+    document.getElementById("result").innerText = "Result: " + total;
+
+    let data = JSON.parse(localStorage.getItem("entries")) || [];
+
+    data.push({
+        id: Date.now(),
+        date: date,
+        total: total
+    });
+
+    localStorage.setItem("entries", JSON.stringify(data));
+    loadHistory();
+}
+
+function loadHistory() {
+    let data = JSON.parse(localStorage.getItem("entries")) || [];
+    let box = document.getElementById("history");
+    box.innerHTML = "";
+
+    data.forEach(item => {
+        box.innerHTML += `
+            <div class="row">
+                <span>${item.date} → ${item.total}</span>
+                <button class="delete-icon" onclick="remove(${item.id})">✕</button>
+            </div>
+        `;
+    });
+}
+
+function remove(id) {
+    let data = JSON.parse(localStorage.getItem("entries")) || [];
+    data = data.filter(e => e.id !== id);
+    localStorage.setItem("entries", JSON.stringify(data));
+    loadHistory();
+}
+
+/* 🔥 SAVE AS PDF */
+function savePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(14);
+    doc.text("Daily Calculator Report", 10, 10);
+
+    let y = 20;
+    let data = JSON.parse(localStorage.getItem("entries")) || [];
+
+    data.forEach((item, index) => {
+        doc.text(`${index+1}. ${item.date} : ${item.total}`, 10, y);
+        y += 8;
+        if (y > 280) {
+            doc.addPage();
+            y = 20;
+        }
+    });
+
+    doc.save("report.pdf");
+}
+
+loadHistory();
+</script>
+
+</body>
+</html>
