@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boxes | Daily Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light">
+
+<header class="site-header">
+  <h1>Daily Calculator</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="calculator.html">Calculator</a>
+    <a href="boxes.html" class="active">Boxes</a>
+    <a href="history.html">History</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<div class="theme-toggle">
+  <input type="checkbox" id="themeSwitch">
+  <label for="themeSwitch"></label>
+</div>
+
+<main class="container">
+  <h2>7 Fixed Multiplier Boxes</h2>
+
+  <div class="box-grid">
+    <div class="box" data-mul="5">
+      <input placeholder="Enter value">
+      <p>× 5 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="10">
+      <input placeholder="Enter value">
+      <p>× 10 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="15">
+      <input placeholder="Enter value">
+      <p>× 15 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="20">
+      <input placeholder="Enter value">
+      <p>× 20 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="30">
+      <input placeholder="Enter value">
+      <p>× 30 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="40">
+      <input placeholder="Enter value">
+      <p>× 40 = <span>0</span></p>
+    </div>
+
+    <div class="box" data-mul="50">
+      <input placeholder="Enter value">
+      <p>× 50 = <span>0</span></p>
+    </div>
+  </div>
+</main>
+<hr>
+
+<h3>Boxes History</h3>
+
+<ul id="boxHistory"></ul>
+
+<button class="btn clear-history" onclick="clearBoxHistory()">
+  Clear History
+</button>
+<button class="btn" onclick="exportBoxHistoryPDF()">
+  Save History as PDF
+</button>
+
+<footer class="site-footer">
+  © 2025 Daily Calculator
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
